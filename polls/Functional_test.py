@@ -10,6 +10,8 @@ from selenium.webdriver.common.by import By
 
 class FunctionalTest(TestCase):
 
+    randomId=str(random.randrange(1000))
+
     def setUp(self):
         self.browser = webdriver.Chrome(executable_path=r"files/chromedriver.exe")
         self.browser.implicitly_wait(2)
@@ -41,14 +43,14 @@ class FunctionalTest(TestCase):
         telefono.send_keys('3173024578')
 
         correo = self.browser.find_element_by_id('id_correo')
-        correo.send_keys('jd.patino1'+str(random.randrange(1000))+'@uniandes.edu.co')
+        correo.send_keys('jd.patino1'+FunctionalTest.randomId+'@uniandes.edu.co')
 
         imagen = self.browser.find_element_by_id('id_imagen')
         ruta= os.path.join(sys.path[0], "polls/files", 'daisy.jpg')
         imagen.send_keys(ruta)
 
         nombreUsuario = self.browser.find_element_by_id('id_username')
-        nombreUsuario.send_keys('juan645'+str(random.randrange(1000)))
+        nombreUsuario.send_keys('juan645'+FunctionalTest.randomId)
 
         clave = self.browser.find_element_by_id('id_password')
         clave.send_keys('clave123')
@@ -69,4 +71,16 @@ class FunctionalTest(TestCase):
         h2=self.browser.find_element(By.XPATH, '//h2[text()="Juan Daniel Arevalo"]')
 
         self.assertIn('Juan Daniel Arevalo', h2.text)
+
+
+    def test_login_independiente(self):
+        self.browser.get('http://localhost:8000/login')
+        campoUsuario = self.browser.find_element_by_id('id_username')
+        campoUsuario.send_keys('juan645'+FunctionalTest.randomId)
+        campoClave = self.browser.find_element_by_id('id_password')
+        campoClave.send_keys('clave123')
+        botonLogin = self.browser.find_element_by_id('id_login')
+        botonLogin.click()
+        self.assertIn('Bienvenido Juan Daniel Arevalo', self.browser.title)
+
     
