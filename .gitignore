@@ -3,3 +3,5 @@ venv
 staticfiles
 environment.sh
 .idea*
+.env
+/polls/files/chromedriver.exe

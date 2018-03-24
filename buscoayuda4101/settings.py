@@ -1,10 +1,8 @@
 """
 Django settings for buscoayuda4101 project on Heroku. Fore more info, see:
 https://github.com/heroku/heroku-django-template
-
 For more information on this file, see
 https://docs.djangoproject.com/en/1.9/topics/settings/
-
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
@@ -21,37 +19,10 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = ')3(3j=f(po)aw(w2%=))^i&xeq5#=f8kvobva6zpe6(95d$rk^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-# AWS S3 Credentials
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-AWS_PRELOAD_METADATA = True
-AWS_QUERYSTRING_AUTH = False
-
-# Expires 20 years in the future at 8PM GMT
-#tenyrs = date.today() + timedelta(days=365*10)
-#AWS_HEADERS = {
-	#'Expires': tenyrs.strftime('%a, %d %b %Y 20:00:00 GMT')
-#}
-
-STATICFILES_STORAGE = 's3_folder_storage.s3.StaticStorage'
-STATIC_URL = 'http://%s.s3.amazonaws.com/static/' % AWS_STORAGE_BUCKET_NAME
-STATIC_S3_PATH = 'static/'
-
-# S3 Storage base
-#AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-
-# This is used by the `static` template tag from `static`
-#STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, 'static')
-
-# Tell the staticfiles app to use S3Boto storage when writing the collected static files (when you run `collectstatic`).
-#STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 
 # Application definition
@@ -64,9 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap3',
-    'storages',
-    's3_folder_storage'
+    'bootstrap3'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -106,13 +75,13 @@ WSGI_APPLICATION = 'buscoayuda4101.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get('DB_ENGINE'),
-        'NAME': os.environ.get('DB_NAME'),
+     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME') ,
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
         'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT')
+        'PORT': '5432',
     }
 }
 
@@ -154,7 +123,7 @@ ALLOWED_HOSTS = ['*']
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-#STATIC_URL = '/static/'
+STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
 #STATICFILES_DIRS = [
