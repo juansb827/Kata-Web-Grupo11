@@ -84,4 +84,19 @@ class FunctionalTest(TestCase):
         self.browser.implicitly_wait(3)
         self.assertIn('Login exitoso.', self.browser.title)
 
-    
+
+    def test_edit_user(self):
+        self.browser.get('http://localhost:8000')
+        link = self.browser.find_element_by_id('id_editar')
+        link.click()
+        new_correo = 'fcaptuayo@uniandes.edu.co'
+        correo = self.browser.find_element_by_id('id_correo')
+        correo.send_keys(new_correo)
+        update = self.browser.find_element_by_id('id_update')
+        update.click()
+
+        self.browser.implicitly_wait(5)
+
+        correo2 = self.browser.find_element_by_id('id_correo')
+
+        self.assertIn(correo2.text, new_correo)
