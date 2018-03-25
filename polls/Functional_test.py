@@ -3,6 +3,8 @@ import sys
 
 import os
 
+
+
 __author__ = 'asistente'
 from unittest import TestCase
 from selenium import webdriver
@@ -117,5 +119,34 @@ class FunctionalTest(TestCase):
         self.browser.implicitly_wait(3)
 
         self.assertEqual( self.browser.find_element_by_id('id_correo').get_attribute("value") , new_correo )
+
+    def test_comments(self):
+        self.browser.get('http://localhost:8000')
+
+        self.browser.execute_script('document.getElementsByClassName("trabajador")[0].click()')
+
+        self.browser.implicitly_wait(3)
+        comentario_nuevo = 'Comentario test'
+
+        correo_test="js.bedoya"+FunctionalTest.randomId+"@uniandes.edu.co"
+        correo = self.browser.find_element_by_id('correo')
+        correo.send_keys(correo_test)
+
+        comentario = self.browser.find_element_by_id('comentario')
+        comentario.send_keys(comentario_nuevo)
+
+        self.browser.implicitly_wait(3)
+        import time
+        time.sleep(5)
+        self.browser.find_element_by_id('adicionar_comentario').click()
+
+        self.browser.implicitly_wait(3)
+
+
+
+
+        correo=self.browser.find_element_by_class_name('correo_comentario').find_element_by_tag_name('h4').text
+        self.assertIn(correo_test, correo)
+
 
 

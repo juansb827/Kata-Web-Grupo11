@@ -31,7 +31,7 @@
             $.getJSON("/mostrarComentarios/" + trabajador).done(function (data) {
                 $.each(data, function (key, val) {
 
-                    var div='<div style="box-shadow: 2px 2px 5px gray; border-radius: 5px" class="col-md-6 col-md-offset-3">'+
+                    var div='<div class="" style="box-shadow: 2px 2px 5px gray; border-radius: 5px" class="col-md-6 col-md-offset-3">'+
                                   '<h4>'+val.fields.correo+'</h4>'+
                                   '<p>'+val.fields.texto+'</p></div>';
                   $('#comentarios').append(div);
@@ -74,7 +74,7 @@
          <input id="correo" style="margin: 5px;" type="email" required placeholder="Correo">
          <textarea placeholder="Agreagar comentario" id="comentario" style="margin: 5px;" rows="3" cols="90" required></textarea>
 
-        <button type="submit" style="margin: 5px;" class="btn btn-default btn-success" title="Adicionar comentario">Comentar <span class="glyphicon glyphicon-plus"></span>
+        <button type="submit" style="margin: 5px;" class="btn btn-default btn-success" id="adicionar_comentario" title="Adicionar comentario">Comentar <span class="glyphicon glyphicon-plus"></span>
         </button>
         </form>
 
