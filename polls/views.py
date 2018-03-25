@@ -27,16 +27,20 @@ def index(request):
 
 
 def login(request):
-    username = request.POST.get('usrname', '')
-    password = request.POST.get('psw', '')
-    user = auth.authenticate(username=username, password=password)
-    if user is not None:
-        auth.login(request, user)
-        messages.success(request, "Bienvenido al sistema {}".format(username), extra_tags="alert-success")
-        return HttpResponseRedirect('/')
+    if request.method == 'POST':
+        username = request.POST.get('usrname', '')
+        password = request.POST.get('psw', '')
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, "Bienvenido al sistema".format(username), extra_tags="alert-success")
+            return render(request, 'polls/loginSucess.html', {})
+        else:
+            messages.error(request, "¡El usuario o la contraseña son incorrectos!", extra_tags="alert-danger")
+            return HttpResponseRedirect('polls/login.html')
     else:
-        messages.error(request, "¡El usuario o la contraseña son incorrectos!", extra_tags="alert-danger")
-        return HttpResponseRedirect('/')
+        return render(request, 'polls/login.html', {})
+
 
 
 def logout(request):

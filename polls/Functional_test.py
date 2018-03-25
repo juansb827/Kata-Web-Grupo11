@@ -75,12 +75,13 @@ class FunctionalTest(TestCase):
 
     def test_login_independiente(self):
         self.browser.get('http://localhost:8000/login')
-        campoUsuario = self.browser.find_element_by_id('id_username')
+        campoUsuario = self.browser.find_element_by_id('usrname')
         campoUsuario.send_keys('juan645'+FunctionalTest.randomId)
-        campoClave = self.browser.find_element_by_id('id_password')
+        campoClave = self.browser.find_element_by_id('psw')
         campoClave.send_keys('clave123')
         botonLogin = self.browser.find_element_by_id('id_login')
         botonLogin.click()
-        self.assertIn('Bienvenido Juan Daniel Arevalo', self.browser.title)
+        self.browser.implicitly_wait(3)
+        self.assertIn('Login exitoso.', self.browser.title)
 
     
