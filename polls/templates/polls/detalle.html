@@ -19,32 +19,33 @@
                     $('#nombres').prepend('<h2>' + val.fields.nombre + ' ' + val.fields.apellidos + '</h2>');
                     $('#foto').prepend('<a><img src="https://miso4202.s3.amazonaws.com/' + val.fields.imagen + '" class="media-object" style="width: 250px; height: 300px"></a>');
                     $('#detalle').prepend('<br><br><br>' +
-                            '<h4><b>Experiencia: </b>' + val.fields.aniosExperiencia + ' años</h4><br>' +
-                            '<h4><b>Telefono: </b>' + val.fields.telefono + '</h4><br>' +
-                            '<h4><b>Correo electrónico: </b>' + val.fields.correo + '</h4>');
+                        '<h4><b>Experiencia: </b>' + val.fields.aniosExperiencia + ' años</h4><br>' +
+                        '<h4><b>Telefono: </b>' + val.fields.telefono + '</h4><br>' +
+                        '<h4><b>Correo electrónico: </b>' + val.fields.correo + '</h4>');
                 })
             });
         })();
 
         mostrarComentarios();
-        function mostrarComentarios(){
+
+        function mostrarComentarios() {
             $.getJSON("/mostrarComentarios/" + trabajador).done(function (data) {
                 $.each(data, function (key, val) {
 
-                    var div='<div class="" style="box-shadow: 2px 2px 5px gray; border-radius: 5px" class="col-md-6 col-md-offset-3">'+
-                                  '<h4>'+val.fields.correo+'</h4>'+
-                                  '<p>'+val.fields.texto+'</p></div>';
-                  $('#comentarios').append(div);
+                    var div = '<div class="" style="box-shadow: 2px 2px 5px gray; border-radius: 5px" class="col-md-6 col-md-offset-3">' +
+                        '<h4 name=' + val.fields.correo + '>' + val.fields.correo + '</h4>' +
+                        '<p>' + val.fields.texto + '</p></div>';
+                    $('#comentarios').append(div);
                 })
             });
         }
 
 
-        function agregarComentario(){
-            $.post( "/addComment", { texto: $('#comentario').val(), trabajador: trabajador, correo: $('#correo').val() })
-              .done(function( data ) {
-                  mostrarComentarios();
-              });
+        function agregarComentario() {
+            $.post("/addComment", {texto: $('#comentario').val(), trabajador: trabajador, correo: $('#correo').val()})
+                .done(function (data) {
+                    mostrarComentarios();
+                });
         }
     </script>
 </head>
@@ -71,16 +72,19 @@
 <div class="row">
     <div style="box-shadow: 2px 2px 5px gray; border-radius: 5px" class="col-md-6 col-md-offset-3">
         <form onsubmit="agregarComentario()">
-         <input id="correo" style="margin: 5px;" type="email" required placeholder="Correo">
-         <textarea placeholder="Agreagar comentario" id="comentario" style="margin: 5px;" rows="3" cols="90" required></textarea>
+            <input id="correo" style="margin: 5px;" type="email" required placeholder="Correo">
+            <textarea placeholder="Agreagar comentario" id="comentario" style="margin: 5px;" rows="3" cols="90"
+                      required></textarea>
 
-        <button type="submit" style="margin: 5px;" class="btn btn-default btn-success" id="adicionar_comentario" title="Adicionar comentario">Comentar <span class="glyphicon glyphicon-plus"></span>
-        </button>
+
+            <button type="submit" id="adicionar_comentario" style="margin: 5px;" class="btn btn-default btn-success"
+                    title="Adicionar comentario">Comentar <span class="glyphicon glyphicon-plus"></span>
+            </button>
         </form>
 
-     </div>
     </div>
-    <div id="comentarios" class="row">
+</div>
+<div id="comentarios" class="row">
 </div>
 </body>
 </html>
