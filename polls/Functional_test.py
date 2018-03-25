@@ -76,27 +76,46 @@ class FunctionalTest(TestCase):
     def test_login_independiente(self):
         self.browser.get('http://localhost:8000/login')
         campoUsuario = self.browser.find_element_by_id('usrname')
-        campoUsuario.send_keys('juan645'+FunctionalTest.randomId)
+        campoUsuario.send_keys('juan645')
         campoClave = self.browser.find_element_by_id('psw')
         campoClave.send_keys('clave123')
         botonLogin = self.browser.find_element_by_id('id_login')
         botonLogin.click()
         self.browser.implicitly_wait(3)
-        self.assertIn('Login exitoso.', self.browser.title)
+        self.assertIn('Login exitoso juan645', self.browser.title)
+
 
 
     def test_edit_user(self):
-        self.browser.get('http://localhost:8000')
-        link = self.browser.find_element_by_id('id_editar')
-        link.click()
-        new_correo = 'fcaptuayo@uniandes.edu.co'
+        self.browser.get('http://localhost:8000/login')
+        campoUsuario = self.browser.find_element_by_id('usrname')
+        campoUsuario.send_keys('juan645')
+        campoClave = self.browser.find_element_by_id('psw')
+        campoClave.send_keys('clave123')
+        botonLogin = self.browser.find_element_by_id('id_login')
+        botonLogin.click()
+
+        self.browser.implicitly_wait(3)
+
+        self.browser.get('http://localhost:8000/')
+
+
+        self.browser.execute_script('document.getElementById("id_editar").click()')
+
+        self.browser.implicitly_wait(3)
+
+        new_correo="js.bedoya170@uniandes.edu.co"
         correo = self.browser.find_element_by_id('id_correo')
+        correo.clear()
         correo.send_keys(new_correo)
-        update = self.browser.find_element_by_id('id_update')
-        update.click()
 
         self.browser.implicitly_wait(5)
 
-        correo2 = self.browser.find_element_by_id('id_correo')
+        self.browser.find_element_by_id('id_update').click()
 
-        self.assertIn(correo2.text, new_correo)
+        self.browser.execute_script('document.getElementById("id_editar").click()')
+        self.browser.implicitly_wait(3)
+
+        self.assertEqual( self.browser.find_element_by_id('id_correo').get_attribute("value") , new_correo )
+
+

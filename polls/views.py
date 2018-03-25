@@ -34,7 +34,7 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             messages.success(request, "Bienvenido al sistema".format(username), extra_tags="alert-success")
-            return render(request, 'polls/loginSucess.html', {})
+            return render(request, 'polls/loginSucess.html', {'usuario': username})
         else:
             messages.error(request, "¡El usuario o la contraseña son incorrectos!", extra_tags="alert-danger")
             return HttpResponseRedirect('polls/login.html')
